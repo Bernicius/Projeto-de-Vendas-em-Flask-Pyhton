@@ -1,0 +1,177 @@
+/* 🎨 Estilo global */
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f0f2f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* 📌 Containers principais */
+.home-container, .gerenciamento-container, .cadastro-produto-container, .cadastro-cliente-container, .main-container {
+    width: 80%;
+    max-width: 1100px;
+    margin: 50px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* 🖥 Responsividade */
+@media (max-width: 768px) {
+    .home-container, .gerenciamento-container, .cadastro-produto-container, .cadastro-cliente-container, .main-container {
+        width: 95%;
+        padding: 20px;
+    }
+}
+
+/* ✨ Botões */
+.btn-home, .submit-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    margin: 10px;
+    font-size: 16px;
+    color: white;
+    background: #007bff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-home:hover, .submit-btn:hover {
+    background: #0056b3;
+}
+
+/* Variantes de botões */
+.submit-btn {
+    background: #28a745;
+}
+.submit-btn.red {
+    background: #dc3545;
+}
+.submit-btn.yellow {
+    background: #ffc107;
+}
+
+.submit-btn:hover {
+    background: #218838;
+}
+.submit-btn.red:hover {
+    background: #c82333;
+}
+.submit-btn.yellow:hover {
+    background: #e0a800;
+}
+
+/* 🏛️ Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 14px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #343a40;
+    color: white;
+}
+
+tr:hover {
+    background: #f8f9fa;
+}
+
+/* 🔑 Formulários */
+input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+/* ℹ️ Textos auxiliares */
+.info-text {
+    text-align: center;
+    margin-top: 20px;
+    color: #777;
+}
+
+h1, h2 {
+    color: #212529;
+}
+
+.actions {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 🛒 Novo Layout da Venda */
+.venda-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* 📦 Lista de Produtos */
+.produtos-lista {
+    width: 40%;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.produto-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.produto-btn:hover {
+    background: #0056b3;
+}
+
+/* 🛒 Carrinho */
+.carrinho {
+    width: 55%;
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.produto-selecionado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #e3f2fd;
+    border-radius: 6px;
+    margin-bottom: 5px;
+}
+
+.produto-selecionado input {
+    width: 60px;
+    margin-left: 10px;
+}

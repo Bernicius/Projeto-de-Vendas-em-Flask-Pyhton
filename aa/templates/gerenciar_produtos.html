@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Produtos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        function filtrarProdutos() {
+            let filtro = document.getElementById("search_produtos").value.toLowerCase();
+            let produtos = document.querySelectorAll("table tbody tr");
+
+            produtos.forEach(produto => {
+                let nome = produto.cells[1]?.textContent.toLowerCase();
+                produto.style.display = nome.includes(filtro) ? "table-row" : "none";
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="main-container">
+        <h1>🛒 Gerenciar Produtos</h1>
+        <p class="info-text">Encontre um produto rapidamente.</p>
+
+        <!-- 🔥 Barra de pesquisa movida para cima da tabela -->
+        <input type="text" id="search_produtos" placeholder="🔍 Buscar Produto..." onkeyup="filtrarProdutos()">
+
+        {% if produtos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto in produtos %}
+                <tr>
+                    <td>{{ produto[0] }}</td>
+                    <td>{{ produto[1] }}</td>
+                    <td>R$ {{ produto[2] }}</td>
+                    <td>
+                        <a href="/editar_produto/{{ produto[0] }}" class="submit-btn yellow">✏️ Editar</a>
+                        <a href="/excluir_produto/{{ produto[0] }}" class="submit-btn red">❌ Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="info-text" style="color: red;">Nenhum produto encontrado.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

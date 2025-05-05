@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Efetuar Venda</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        let total = 0;
+        let carrinho = {};
+
+        function filtrarClientes() {
+            let filtro = document.getElementById("search_cliente").value.toLowerCase();
+            let clientes = document.querySelectorAll("#cliente-select option");
+
+            clientes.forEach(cliente => {
+                let nome = cliente.textContent.toLowerCase();
+                cliente.style.display = nome.includes(filtro) ? "block" : "none";
+            });
+        }
+
+        function adicionarProduto(element) {
+            let produtoId = element.getAttribute("data-id");
+            let produtoNome = element.getAttribute("data-nome");
+            let preco = parseFloat(element.getAttribute("data-preco"));
+
+            if (!carrinho[produtoId]) {
+                carrinho[produtoId] = { nome: produtoNome, preco: preco, quantidade: 1 };
+            } else {
+                carrinho[produtoId].quantidade++;
+            }
+
+            atualizarCarrinho();
+        }
+
+        function atualizarCarrinho() {
+            let carrinhoContainer = document.getElementById("carrinho-container");
+            carrinhoContainer.innerHTML = "";
+            total = 0;
+
+            let produtosSelecionados = [];
+
+            for (let produtoId in carrinho) {
+                let item = carrinho[produtoId];
+                total += item.preco * item.quantidade;
+
+                produtosSelecionados.push(`${produtoId}:${item.quantidade}`);
+
+                let produtoDiv = document.createElement("div");
+                produtoDiv.classList.add("produto-selecionado");
+                produtoDiv.innerHTML = `
+                    <span>${item.nome} - R$ ${item.preco.toFixed(2)}</span>
+                    <input type="number" min="1" value="${item.quantidade}" onchange="alterarQuantidade(${produtoId}, this.value)">
+                    <button onclick="removerProduto(${produtoId})">❌</button>
+                `;
+
+                carrinhoContainer.appendChild(produtoDiv);
+            }
+
+            // 🔥 Agora formatando corretamente para apenas 2 casas decimais
+            document.getElementById("totalValor").innerText = total.toFixed(2);
+            document.querySelector('input[name="valor_total"]').value = total.toFixed(2);
+            document.querySelector('input[name="produtos_selecionados"]').value = produtosSelecionados.join(",");
+        }
+
+        function alterarQuantidade(produtoId, quantidade) {
+            if (quantidade < 1) {
+                removerProduto(produtoId);
+            } else {
+                carrinho[produtoId].quantidade = parseInt(quantidade);
+                atualizarCarrinho();
+            }
+        }
+
+        function removerProduto(produtoId) {
+            delete carrinho[produtoId];
+            atualizarCarrinho();
+        }
+
+        function filtrarProdutosDisponiveis() {
+            let filtro = document.getElementById("search_disponivel").value.toLowerCase();
+            let produtos = document.querySelectorAll(".produto-btn");
+
+            produtos.forEach(produto => {
+                let nome = produto.textContent.toLowerCase();
+                produto.style.display = nome.includes(filtro) ? "block" : "none";
+            });
+        }
+
+        function validarVenda(event) {
+            let carrinho = document.getElementById("carrinho-container").children.length;
+
+            if (carrinho === 0) {
+                event.preventDefault(); // Impede o envio do formulário
+                document.getElementById("mensagem_erro").style.display = "block"; // Exibe a mensagem de erro
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="main-container">
+        <h1>🛍️ Efetuar Venda</h1>
+        <p class="info-text">Selecione um cliente e os produtos para registrar a venda.</p>
+
+        <form method="POST" action="{{ url_for('registrar_venda') }}" onsubmit="validarVenda(event)">
+            <label><strong>Cliente:</strong></label>
+            <!-- 🔥 Barra de pesquisa para clientes -->
+            <input type="text" id="search_cliente" placeholder="🔍 Buscar Cliente..." onkeyup="filtrarClientes()">
+
+            <select name="codcliente" id="cliente-select" required>
+                {% for cliente in clientes %}
+                <option value="{{ cliente[0] }}">{{ cliente[1] }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="venda-container">
+                <div class="produtos-lista">
+                    <h2>📦 Produtos Disponíveis</h2>
+                    <input type="text" id="search_disponivel" placeholder="🔍 Buscar Produto..." onkeyup="filtrarProdutosDisponiveis()">
+
+                    {% for produto in produtos %}
+                    <button type="button" class="produto-btn" data-id="{{ produto[0] }}" data-nome="{{ produto[1] }}" data-preco="{{ produto[2] }}" onclick="adicionarProduto(this)">
+                        {{ produto[1] }} - R$ {{ produto[2] }}
+                    </button>
+                    {% endfor %}
+                </div>
+
+                <div class="carrinho">
+                    <h2>🛒 Carrinho</h2>
+                    <div id="carrinho-container"></div>
+                    <input type="hidden" name="produtos_selecionados">
+                </div>
+            </div>
+
+            <p id="valorTotal"><strong>Valor Total: R$ <span id="totalValor">0.00</span></strong></p>
+            <input type="hidden" name="valor_total" value="0.00">
+
+            <button type="submit" class="submit-btn green">✅ Finalizar Venda</button>
+
+            <!-- 🔥 Mensagem de erro adicionada -->
+            <p id="mensagem_erro" style="color: red; display: none;">❌ Você deve selecionar ao menos um produto antes de finalizar a venda!</p>
+        </form>
+
+        <div class="actions">
+            <a href="{{ url_for('home') }}" class="btn-home">🏠 Voltar</a>
+            <a href="{{ url_for('listar_vendas') }}" class="btn-home">📜 Consultar Vendas</a>
+        </div>
+    </div>
+</body>
+</html>

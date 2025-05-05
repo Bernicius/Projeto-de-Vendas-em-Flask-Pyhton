@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Gestão de Vendas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="home-container">
+        <h1>📊 Gestão de Vendas</h1>
+        <p class="info-text">Gerencie clientes, produtos e vendas de maneira eficiente.</p>
+
+        <div class="actions">
+            <a href="/cadastro_cliente" class="btn-home">➕ Cadastrar Cliente</a>
+            <a href="/cadastro_produto" class="btn-home">➕ Cadastrar Produto</a>
+            <a href="/gerenciamento" class="btn-home">⚙️ Gerenciar</a>
+            <a href="/efetuar_venda" class="btn-home">🛍️ Efetuar Venda</a> <!-- 🔥 Adicionado aqui -->
+        </div>
+    </div>
+</body>
+</html>

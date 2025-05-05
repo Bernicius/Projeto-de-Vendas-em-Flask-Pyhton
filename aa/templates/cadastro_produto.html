@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Produto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="cadastro-produto-container">
+        <h1>🛒 Cadastro de Produto</h1>
+        <p class="info-text">Adicione um novo produto ao sistema de vendas.</p>
+
+        {% if mensagem %}
+        <div class="info-text" style="color: red;">{{ mensagem }}</div>
+        {% endif %}
+
+        <form method="POST" action="/salvar_produto">
+            <input type="text" name="codproduto" placeholder="Código do Produto" required>
+            <input type="text" name="nome" placeholder="Nome do Produto" required>
+            <input type="number" step="0.01" name="preco" placeholder="Preço (R$)" required>
+
+            <button type="submit" class="submit-btn green">✅ Salvar Produto</button>
+        </form>
+
+        <div class="actions">
+            <a href="/" class="btn-home">🏠 Voltar</a>
+            <a href="/gerenciamento" class="btn-home">⚙️ Gerenciar</a>
+        </div>
+    </div>
+</body>
+</html>

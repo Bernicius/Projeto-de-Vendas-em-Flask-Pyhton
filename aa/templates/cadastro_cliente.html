@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Cliente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="cadastro-cliente-container">
+        <h1>🧑‍💼 Cadastro de Cliente</h1>
+        <p class="info-text">Adicione um novo cliente ao sistema de vendas.</p>
+
+        <form method="POST" action="/salvar_cliente">
+            <input type="text" name="nome" placeholder="Nome Completo" required>
+            <input type="text" name="endereco" placeholder="Endereço" required>
+
+            <button type="submit" class="submit-btn green">✅ Salvar Cliente</button>
+        </form>
+
+        <div class="actions">
+            <a href="/" class="btn-home">🏠 Voltar</a>
+            <a href="/gerenciamento" class="btn-home">⚙️ Gerenciar</a>
+        </div>
+    </div>
+</body>
+</html>

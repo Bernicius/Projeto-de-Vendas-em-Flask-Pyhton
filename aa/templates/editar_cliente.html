@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Cliente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="cadastro-cliente-container">
+        <h1>✏️ Editar Cliente</h1>
+        <p class="info-text">Modifique o nome e o endereço do cliente.</p>
+
+        <form method="POST" action="/atualizar_cliente/{{ cliente[0] }}">
+            <p><strong>Código do Cliente:</strong> {{ cliente[0] }}</p>
+            <input type="text" name="nome" value="{{ cliente[1] }}" required>
+            <input type="text" name="endereco" value="{{ cliente[2] }}" required>
+
+            <button type="submit" class="submit-btn green">✅ Atualizar Cliente</button>
+        </form>
+
+        <div class="actions">
+            <a href="/listar_clientes" class="btn-home">🔙 Voltar</a>
+        </div>
+    </div>
+</body>
+</html>

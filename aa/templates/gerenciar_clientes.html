@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Clientes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        function filtrarClientes() {
+            let filtro = document.getElementById("search_clientes").value.toLowerCase();
+            let clientes = document.querySelectorAll("table tbody tr");
+
+            clientes.forEach(cliente => {
+                let nome = cliente.cells[1]?.textContent.toLowerCase();
+                cliente.style.display = nome.includes(filtro) ? "table-row" : "none";
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="main-container">
+        <h1>🧑‍💼 Gerenciar Clientes</h1>
+        <p class="info-text">Encontre um cliente rapidamente.</p>
+
+        <input type="text" id="search_clientes" placeholder="🔍 Buscar Cliente..." onkeyup="filtrarClientes()">
+
+        {% if clientes %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente[0] }}</td>
+                    <td>{{ cliente[1] }}</td>
+                    <td>{{ cliente[2] }}</td>
+                    <td>
+                        <a href="/editar_cliente/{{ cliente[0] }}" class="submit-btn yellow">✏️ Editar</a>
+                        <a href="/excluir_cliente/{{ cliente[0] }}" class="submit-btn red">❌ Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="info-text" style="color: red;">Nenhum cliente encontrado.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

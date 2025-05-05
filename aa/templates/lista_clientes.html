@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Clientes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        function filtrarClientes() {
+            let filtro = document.getElementById("search_clientes").value.toLowerCase();
+            let clientes = document.querySelectorAll("tbody tr");
+            let encontrou = false;
+
+            clientes.forEach(cliente => {
+                let nome = cliente.querySelector("td:nth-child(2)")?.textContent.toLowerCase();
+                if (nome.includes(filtro)) {
+                    cliente.style.display = "table-row";
+                    encontrou = true;
+                } else {
+                    cliente.style.display = "none";
+                }
+            });
+
+            let mensagemErro = document.getElementById("mensagem_erro");
+            mensagemErro.style.display = encontrou ? "none" : "block";
+        }
+    </script>
+</head>
+<body>
+    <div class="main-container">
+        <h1>🧑‍💼 Clientes Cadastrados</h1>
+        <p class="info-text">Aqui estão todos os clientes registrados no sistema.</p>
+
+
+        <input type="text" id="search_clientes" placeholder="🔍 Buscar Cliente..." onkeyup="filtrarClientes()">
+
+        {% if clientes %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente[0] }}</td>
+                    <td>{{ cliente[1] }}</td>
+                    <td>{{ cliente[2] }}</td>
+                    <td>
+                        <a href="/editar_cliente/{{ cliente[0] }}" class="submit-btn yellow">✏️ Editar</a>
+                        <a href="/excluir_cliente/{{ cliente[0] }}" class="submit-btn red">❌ Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p id="mensagem_erro" style="color: red; display: none;">❌ Cliente não encontrado.</p>
+        {% else %}
+        <p class="info-text" style="color: red;">Nenhum cliente cadastrado.</p>
+        {% endif %}
+
+        <div class="actions">
+            <a href="/cadastro_cliente" class="btn-home">➕ Cadastrar Cliente</a>
+            <a href="/gerenciamento" class="btn-home">⚙️ Voltar ao Gerenciamento</a>
+        </div>
+    </div>
+</body>
+</html>

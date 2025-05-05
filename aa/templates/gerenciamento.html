@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        function mostrarLista(tipo) {
+            fetch(`/${tipo}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("gerenciamento-container").innerHTML = data;
+                });
+        }
+    </script>
+</head>
+<body>
+    <div class="gerenciamento-container">
+        <h1>⚙️ Gerenciamento</h1>
+        <p class="info-text">Acompanhe e gerencie clientes, produtos e vendas.</p>
+
+        <div class="actions">
+            <button onclick="mostrarLista('listar_clientes')" class="btn-home">🧑‍💼 Gerenciar Clientes</button>
+            <button onclick="mostrarLista('listar_produtos')" class="btn-home">🛒 Gerenciar Produtos</button>
+            <a href="/" class="btn-home">🏠 Voltar</a>
+        </div>
+
+        <div id="gerenciamento-container"></div>
+    </div>
+</body>
+</html>

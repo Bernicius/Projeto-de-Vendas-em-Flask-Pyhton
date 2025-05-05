@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Vendas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <h1>📜 Consultar Vendas</h1>
+        <p class="info-text">Digite o código da venda para ver detalhes.</p>
+
+        <form method="GET" action="/buscar_vendas">
+            <input type="text" name="codigo_venda" placeholder="Código da Venda" required>
+            <button type="submit" class="submit-btn">🔍 Procurar Venda</button>
+        </form>
+
+        {% if vendas %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Data da Venda</th>
+                    <th>Preço Total</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for venda in vendas %}
+                <tr>
+                    <td>{{ venda[0] }}</td>
+                    <td>{{ venda[1] }}</td>
+                    <td>R$ {{ venda[2] }}</td>
+                    <td>{{ venda[3] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="info-text" style="color: red;">Nenhuma venda encontrada.</p>
+        {% endif %}
+
+        <div class="actions">
+            <a href="/efetuar_venda" class="btn-home">🛍️ Efetuar Venda</a>
+            <a href="/" class="btn-home">🏠 Voltar</a>
+        </div>
+    </div>
+</body>
+</html>

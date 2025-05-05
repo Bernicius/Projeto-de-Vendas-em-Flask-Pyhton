@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmação da Venda</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <h1>✅ Venda Registrada com Sucesso!</h1>
+        <p><strong>ID da Venda:</strong> {{ codvenda }}</p>
+        <p><strong>Valor Total:</strong> R$ {{ valor_total }}</p>
+
+        <div class="actions">
+            <a href="{{ url_for('home') }}" class="btn-home">🏠 Voltar</a>
+            <a href="{{ url_for('listar_vendas') }}" class="btn-home">📜 Consultar Vendas</a>
+        </div>
+    </div>
+</body>
+</html>
